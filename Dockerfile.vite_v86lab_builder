@@ -1,0 +1,15 @@
+FROM node:lts
+
+WORKDIR /app
+COPY . .
+RUN mkdir -p src/v86
+RUN cp -r v86/build/* src/v86
+RUN mkdir -p public/bios
+RUN cp v86/bios/*.bin public/bios
+RUN mkdir -p public/images
+RUN cp -r images/* public/images
+RUN mkdir -p public/wasm
+RUN cp v86/build/v86.wasm public/wasm
+RUN npm install
+RUN npm run build
+CMD ["npm", "run", "host"]
