@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 
 set -euo pipefail
 
@@ -87,11 +87,11 @@ emulator.add_listener('serial0-output-byte', function(byte)
 
     serial_text += c;
 
-    if(!booted && serial_text.endsWith('localhost:~# '))
+    if(!booted && serial_text.endsWith(':~# '))
     {
         booted = true;
 
-        emulator.serial0_send('sync;echo 3 >/proc/sys/vm/drop_caches\n');
+        emulator.serial0_send('sync;echo 3 >/proc/sys/vm/drop_caches;rmmod ne2k-pci;rmmod virtio-net\n');
 
         setTimeout(async function ()
             {
