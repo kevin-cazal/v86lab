@@ -20,8 +20,9 @@ chmod +x /usr/bin/micro
 
 
 RUN mkdir -p /home/user42
-COPY --chown=user42:user42 home101/ /home/user42/
-RUN adduser -D -s /bin/bash -h /home/user42 user42
+RUN adduser -D -s /bin/ash -h /home/user42 user42
+COPY home101/ /home/user42/
+RUN chown -R user42:user42 /home/user42/
 
 #RUN sed -i 's/getty 38400 tty1/agetty --autologin root tty1 linux/' /etc/inittab
 RUN echo 'ttyS0::respawn:/sbin/agetty --autologin root -s ttyS0 115200 vt100' >> /etc/inittab
@@ -30,8 +31,6 @@ RUN echo "user42:" | chpasswd
 
 RUN mkdir -p /delivery
 RUN chown user42:user42 /delivery
-
-RUN setup-hostname v86lab
 
 # Adding networking.sh script
 #RUN echo -e "rmmod ne2k-pci && modprobe ne2k-pci\nrmmod virtio-net && modprobe virtio-net\nhwclock -s\nsetup-interfaces -a -r" > /root/networking.sh && chmod +x /root/networking.sh
