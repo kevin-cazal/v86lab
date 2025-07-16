@@ -4,6 +4,7 @@ import { createV86NetworkStream } from "@tcpip/v86";
 import { VirtualMachine } from "./vm.js";
 import { config as alpine_config } from "./v86_config/alpine.js";
 import { marked } from "marked";
+import { baseUrl } from "marked-base-url";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -53,37 +54,15 @@ class NetworkLab {
 
 window.v86lab = new NetworkLab(document.querySelector("#app"), 1);
 window.mdviewer = marked
-document.getElementById('mdviewer').innerHTML = marked.parse(`
-# Welcome to the Network Lab
-This lab allows you to create and manage virtual machines connected through a network bridge. Each VM runs Alpine Linux and can communicate with each other through the bridge interface.
-
-## Features
-- Create multiple VMs
-- Network connectivity between VMs
-- Customizable bridge settings
-- Interactive terminal interface
-## Usage
-1. Open the terminal in each VM to start using Alpine Linux.
-2. Use the network tools available in Alpine to test connectivity between VMs.
-3. Modify the bridge settings as needed in the source code.
- bash
-ls -l /dev/
-
-You can run commands like or  in the terminal of each VM to check the network status and connectivity.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
-anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur       
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-
-`);
+window.mdviewer.use(baseUrl("https://raw.githubusercontent.com/kevin-cazal/discover-linux-1/refs/heads/main/"));
+md_content = fetch("https://raw.githubusercontent.com/kevin-cazal/discover-linux-1/refs/heads/main/shell_101_fr.md")
+  .then(response => response.text())
+  .then(text => {
+    window.mdviewer.setOptions({
+      gfm: true,
+      breaks: true,
+      headerIds: false,
+    });
+    document.getElementById('mdviewer').innerHTML = window.mdviewer.parse(text);
+  })
+  .catch(error => console.error("Error loading markdown content:", error));

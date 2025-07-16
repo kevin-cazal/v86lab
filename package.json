@@ -20,6 +20,7 @@
     "@xterm/xterm": "^5.5.0",
     "bootstrap": "^5.3.7",
     "marked": "^16.0.0",
+    "marked-base-url": "^1.1.7",
     "tcpip": "^0.3.3",
     "uuid": "^11.1.0",
     "v86": "^0.5.155"
