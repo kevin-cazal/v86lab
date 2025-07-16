@@ -86,12 +86,13 @@ emulator.add_listener('serial0-output-byte', function(byte)
     process.stdout.write(c);
 
     serial_text += c;
+    
 
-    if(!booted && serial_text.endsWith(':~# '))
+    if(!booted && (serial_text.endsWith(':~# ') ))
     {
         booted = true;
 
-        emulator.serial0_send('sync;echo 3 >/proc/sys/vm/drop_caches;rmmod ne2k-pci;rmmod virtio-net\n');
+        emulator.serial0_send('sync;echo 3 >/proc/sys/vm/drop_caches;rmmod ne2k-pci;rmmod virtio-net;exec login -f user42\n');
 
         setTimeout(async function ()
             {

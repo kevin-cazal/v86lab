@@ -51,12 +51,11 @@ export class VirtualMachine {
   renderMemStateControls() {
     return `
             <div id="v86-mem-state-controls-${this.uuid}" class="v86-mem-state-controls">
-                <fieldset>
-                    <legend>Load/Save State</legend>
-                    <button id="v86-save-${this.uuid}" class="v86-button">Save State</button>
-                    <input type="file" id="v86-load-file-${this.uuid}" class="v86-file-input" />
-                    <button id="v86-load-${this.uuid}" class="v86-button">Load State</button>
-                </fieldset>
+                    <div class="input-group"> 
+                        <button id="v86-save-${this.uuid}" class="v86-button btn btn-primary">Save State</button>
+                        <input type="file" id="v86-load-file-${this.uuid}" class="v86-file-input form-control" />
+                        <button id="v86-load-${this.uuid}" class="v86-button btn btn-primary">Load State</button>
+                    </div>
             </div>
         `;
   }
@@ -69,13 +68,12 @@ export class VirtualMachine {
 
   renderHDControls() {
     return `
-            <div id="v86-hd-controls-${this.uuid}" class="v86-hd-controls">
-                <fieldset>
-                    <legend>Hard Disk</legend>
-                    <button id="v86-save-hd-${this.uuid}" class="v86-button">Save HD</button>
-                    <input type="file" id="v86-load-hd-file-${this.uuid}" class="v86-file-input" />
-                    <button id="v86-load-hd-${this.uuid}" class="v86-button">Load HD</button>
-                </fieldset>
+            <div hidden id="v86-hd-controls-${this.uuid}" class="v86-hd-controls">
+                    <div class="input-group">
+                      <button id="v86-save-hd-${this.uuid}" class="v86-button btn btn-primary">Save HD</button>
+                      <input type="file" id="v86-load-hd-file-${this.uuid}" class="v86-file-input form-control" />
+                      <button id="v86-load-hd-${this.uuid}" class="v86-button btn btn-primary">Load HD</button>
+                    </div>  
             </div>
         `;
   }
@@ -149,6 +147,6 @@ export class VirtualMachine {
       this.fitAddon.fit();
     });
     this.serialTerm = new SerialTerm(this.v86, this.xtermjs);
-    this.xtermjs.write("Welcome!\r\n");
+    this.xtermjs.write("Welcome! Press Enter to activate the terminal...\r\n");
   }
 }
